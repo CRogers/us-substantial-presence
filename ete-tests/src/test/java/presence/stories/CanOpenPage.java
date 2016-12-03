@@ -29,7 +29,7 @@ public class CanOpenPage {
 
     @Rule
     public DockerComposeRule composition = DockerComposeRule.builder()
-        .file("../docker-compose.yml")
+        .file("docker-compose.yml")
         .waitingForService("selenium", HealthChecks.toRespondOverHttp(4444,
             port -> port.inFormat("http://$HOST:$EXTERNAL_PORT/wd/hub")))
         .shutdownStrategy(ShutdownStrategy.AGGRESSIVE)
@@ -45,15 +45,16 @@ public class CanOpenPage {
 
     @Test
     public void canOpenPage() {
-        givenThat(callum).attemptsTo(Open.browserOn().url("http://isitxmas.com"));
+        String targetUrl = "file:///site/index.html";
+        givenThat(callum).attemptsTo(Open.url(targetUrl));
 
         Question<String> itIsChristmas = actor -> Text.of(Target
             .the("Is it Xmas?")
-            .locatedBy("/html/body/div[1]/h2"))
+            .locatedBy("/html/body/div"))
             .viewedBy(actor)
             .asString();
         then(callum).should(eventually(seeThat(
-            itIsChristmas, is("NO")
+            itIsChristmas, is("Hi")
         )));
     }
 }

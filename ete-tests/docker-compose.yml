@@ -8,3 +8,6 @@ services:
       - 5902:5902
     environment:
       no_proxy: localhost #https://forums.docker.com/t/space-in-new-no-proxy-env-var-breaking-old-containers/14075
+
+    volumes:
+      - ../frontend/src:/site

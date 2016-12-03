@@ -13,7 +13,7 @@ buildscript {
 }
 
 apply {
-
+    plugin("net.serenity-bdd.aggregator")
 }
 
 dependencies {
