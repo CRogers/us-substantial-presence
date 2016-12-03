@@ -1,0 +1,25 @@
+{
+  "name": "us-substantial-presence",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/CRogers/us-substantial-presence",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CRogers/us-substantial-presence"
+  },
+  "main": "./build/us-substantial-presence",
+  "author": "Callum Rogers",
+  "contributors": [
+    {
+      "name": "Callum Rogers"
+    }
+  ],
+  "dependencies": {},
+  "version": "0.1.0",
+  "devDependencies": {
+    "ts-loader": "^1.2.2",
+    "typescript": "^2.0.10",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
