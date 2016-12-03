@@ -20,20 +20,3 @@ allprojects {
         setSourceCompatibility(JavaVersion.VERSION_1_8)
     }
 }
-
-/*
-apply plugin: 'java'
-
-
-dependencies {
-    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}'
-
-    testCompile 'net.serenity-bdd:serenity-core:${serenityVersion}'
-    testCompile 'net.serenity-bdd:serenity-junit:${serenityVersion}'
-    testCompile 'net.serenity-bdd:serenity-screenplay:${serenityVersion}'
-    testCompile 'net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}'
-
-    testCompile 'ch.qos.logback:logback-classic:1.1.7'
-    testCompile "com.palantir.docker.compose:docker-compose-rule:${dockerComposeRuleVersion}"
-}
-*/
