@@ -1,0 +1,15 @@
+rootProject.buildFileName = 'build.gradle.kts'
+
+rootProject.name = 'us-substantial-presence'
+
+registerProject('ete-tests')
+
+def registerProject(String name) {
+    def fullName = ":${name}"
+    include fullName
+    def p = project(fullName)
+    p.projectDir = new File(name)
+    p.buildFileName = "${name}.gradle.kts"
+    assert p.buildFile.isFile()
+}
+
