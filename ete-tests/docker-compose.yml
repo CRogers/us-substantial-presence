@@ -10,4 +10,4 @@ services:
       no_proxy: localhost #https://forums.docker.com/t/space-in-new-no-proxy-env-var-breaking-old-containers/14075
 
     volumes:
-      - ../frontend/src:/site
+      - ../frontend/site:/site
