@@ -1,1 +1,0 @@
-document.getElementsByTagName("body")[0].insertAdjacentText("beforeend", "Hi")

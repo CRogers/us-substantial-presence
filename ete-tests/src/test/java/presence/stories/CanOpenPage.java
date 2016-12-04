@@ -50,7 +50,7 @@ public class CanOpenPage {
 
         Question<String> itIsChristmas = actor -> Text.of(Target
             .the("Is it Xmas?")
-            .locatedBy("/html/body/div"))
+            .locatedBy("/html/body"))
             .viewedBy(actor)
             .asString();
         then(callum).should(eventually(seeThat(

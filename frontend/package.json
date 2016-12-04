@@ -1,6 +1,7 @@
 {
   "name": "us-substantial-presence",
-  "description": "",
+  "description": "Some description",
+  "license": "BSD-3-Clause",
   "keywords": [],
   "homepage": "https://github.com/CRogers/us-substantial-presence",
   "repository": {
@@ -14,7 +15,13 @@
       "name": "Callum Rogers"
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@types/react": "^0.14.52",
+    "@types/react-dom": "^0.14.19",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "rx": "^4.1.0"
+  },
   "version": "0.1.0",
   "devDependencies": {
     "html-webpack-plugin": "^2.24.1",

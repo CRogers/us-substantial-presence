@@ -1,7 +1,7 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/app.ts',
+    entry: './src/app.tsx',
     output: {
         path: __dirname + '/site',
         publicPath: '',
@@ -9,10 +9,13 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.ts/, loader: 'ts-loader'}
+            {test: /\.tsx?/, loader: 'ts-loader'}
         ]
     },
-    resolve: { extensions: ["", ".js", ".ts"] },
+    resolve: {
+        extensions: ["", ".js", ".ts", ".tsx"],
+        moduleDirectories: ['src']
+    },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'US Substantial Presence',
