@@ -1,0 +1,15 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+test:
+  override:
+    - ./gradlew
+
+deployment:
+  master:
+    branch: master
+    owner: CRogers
+    commands:
+      - ./scripts/deploy-gh-pages.sh
