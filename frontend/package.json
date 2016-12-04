@@ -17,6 +17,7 @@
   "dependencies": {},
   "version": "0.1.0",
   "devDependencies": {
+    "html-webpack-plugin": "^2.24.1",
     "ts-loader": "^1.2.2",
     "typescript": "^2.0.10",
     "webpack": "^1.13.3",
