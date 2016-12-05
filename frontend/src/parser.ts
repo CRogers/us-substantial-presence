@@ -17,7 +17,25 @@ export module UsSubPres.Parser {
         }
 
         public adjustedDaysAt(time: moment.Moment): AdjustedDays {
-            return rangeToDuration(this.timeInUs()).asDays()
+            let oneYearAgo = time.clone().subtract(1, 'year');
+            let twoYearsAgo = time.clone().subtract(2, 'years');
+
+            let oneToTwoYearsAgo = moment.range(twoYearsAgo, oneYearAgo);
+            let oneYearAgoUntilNow = moment.range(oneYearAgo, time);
+
+            return this.daysInUsForRange(oneYearAgoUntilNow)
+                +  this.daysInUsForRange(oneToTwoYearsAgo) / 3;
+
+        }
+
+        private daysInUsForRange(range: moment.Range): AdjustedDays {
+            let timeInUsInRange = range.intersect(this.timeInUs());
+
+            if (timeInUsInRange === null) {
+                return 0;
+            }
+
+            return rangeToDuration(timeInUsInRange).asDays()
         }
     }
 

@@ -34,25 +34,25 @@ module UsSubPres.Tests {
     describe('Calculator should', () => {
         it('calculate the travel history with no trips to no presence', () => {
             let travelHistory: TravelHistory = { trips: [] };
-            expect(Calculator.calculate(travelHistory)).to.equal(false)
+            expect(Calculator.calculate(travelHistory, moment('2016-09-16'))).to.equal(false)
         });
 
-        it('calculate a single trip which stays for two years to have presence', () => {
+        it('calculate a single trip which stays for two years coming back the day after the end to have presence', () => {
             let travelHistory: TravelHistory = singleTripFromTo(
                 '2014-09-16',
                 '2016-09-16'
             );
 
-            expect(Calculator.calculate(travelHistory)).to.equal(true);
+            expect(Calculator.calculate(travelHistory, moment('2016-09-17'))).to.equal(true);
         });
 
-        it('calculate a single trip which stays for two days to not have presence', () => {
+        it('calculate a single trip which stays for two days measured the day after the end to not have presence', () => {
             let travelHistory: TravelHistory = singleTripFromTo(
                 '2016-09-14',
                 '2016-09-16'
             );
 
-            expect(Calculator.calculate(travelHistory)).to.equal(false);
+            expect(Calculator.calculate(travelHistory, moment('2016-09-17'))).to.equal(false);
         })
     });
 }

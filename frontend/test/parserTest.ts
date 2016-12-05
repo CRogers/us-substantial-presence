@@ -52,6 +52,15 @@ module UsSubPres.Tests {
 
             expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(4);
         });
+
+        it('gives days:adjustedDays 3:1 if all in 1-2 years ago', () => {
+            let trip = new Parser.Trip(
+                {port: JFK, time: moment('2015-09-10')},
+                {port: JFK, time: moment('2015-09-16')}
+            );
+
+            expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(2);
+        });
     });
 
     function stripIndent(rawText: string) {
