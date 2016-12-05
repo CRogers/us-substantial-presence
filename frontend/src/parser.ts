@@ -1,19 +1,23 @@
 import * as _ from 'lodash'
 import * as moment from 'moment'
+import 'moment-range'
 
 export module UsSubPres.Parser {
     export interface TravelHistory {
         trips: Trip[];
     }
 
-    export interface Trip {
-        entry: PortVisit;
-        exit: PortVisit;
+    export class Trip {
+        constructor(public entry: PortVisit, public exit: PortVisit) {}
+
+        public timeInUs(): moment.Range {
+            return moment.range(this.entry.time, this.exit.time)
+        }
     }
 
     export interface PortVisit {
-        port: Port;
-        time: moment.Moment;
+        port: Port,
+        time: moment.Moment
     }
 
     export type Port = string;
@@ -42,10 +46,10 @@ export module UsSubPres.Parser {
         let entry = _.take(trip, 2);
         let exit = _.drop(trip, 2);
 
-        return {
-            entry: parsePortVisit(entry),
-            exit: parsePortVisit(exit)
-        }
+        return new Trip(
+            parsePortVisit(entry),
+            parsePortVisit(exit)
+        );
     }
 
     function parsePortVisit(portVisit: string[]): PortVisit {

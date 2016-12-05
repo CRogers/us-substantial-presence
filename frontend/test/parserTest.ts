@@ -25,17 +25,16 @@ module UsSubPres.Tests {
 
             expect(Parser.parseTravelHistory(rawText)).to.deep.equal({
                 trips: [
-                    {
-                        entry: {
+                    new Parser.Trip(
+                        {
                             port: 'JFK - JOHN F KENNEDY INTL',
                             time: moment('2016-09-12T11:55:54.0-04:00')
                         },
-                        exit: {
+                        {
                             port: 'NYC - NEW YORK CITY, NY',
                             time: moment('2016-09-16T00:00:00.0-04:00')
                         }
-                    }
-
+                    )
                 ]
             })
         })

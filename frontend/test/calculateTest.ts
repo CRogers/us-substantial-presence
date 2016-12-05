@@ -8,6 +8,7 @@ import * as CalculatorM from '../src/calculator'
 
 module UsSubPres.Tests {
     import TravelHistory = ParserM.UsSubPres.Parser.TravelHistory;
+    import Trip = ParserM.UsSubPres.Parser.Trip;
     import Calculator = CalculatorM.UsSubPres.Calculator;
 
     let JFK = 'JFK - JOHN F KENNEDY INTL';
@@ -15,16 +16,16 @@ module UsSubPres.Tests {
     function singleTripFromTo(entryDate: string, exitDate: string) {
         return {
             trips: [
-                {
-                    entry: {
+                new Trip(
+                    {
                         port: JFK,
                         time: moment(entryDate)
                     },
-                    exit: {
+                    {
                         port: JFK,
                         time: moment(exitDate)
                     }
-                }
+                )
 
             ]
         };

@@ -1,4 +1,5 @@
 import * as ParserM from './parser'
+import moment = require("moment");
 
 
 export module UsSubPres.Calculator {
@@ -11,6 +12,6 @@ export module UsSubPres.Calculator {
             return false;
         }
         let firstTrip = tripHistory.trips[0];
-        return true;
+        return moment.duration(firstTrip.exit.time.diff(firstTrip.entry.time)).asDays() >= NUMBER_OF_DAYS_ALLOWED_IN_US;
     }
 }
