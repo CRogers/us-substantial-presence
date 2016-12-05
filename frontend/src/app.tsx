@@ -7,7 +7,11 @@ module UsSubPres {
     let b = Rx.Observable.just(3);
 
     ReactDOM.render(
-        <div>Hi</div>,
+        <div>
+            <textarea className="travel-history"></textarea>
+            <div className="test-result"></div>
+        </div>
+        ,
         document.getElementsByTagName('body')[0]
     );
 }

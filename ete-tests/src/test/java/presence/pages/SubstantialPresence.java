@@ -1,6 +1,7 @@
 package presence.pages;
 
 public enum SubstantialPresence {
-    HAS,
-    DOES_NOT_HAVE
+    NO_RESULT,
+    HAS_PRESENCE,
+    DOES_NOT_HAVE_PRESENCE
 }

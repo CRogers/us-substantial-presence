@@ -17,11 +17,15 @@ public class PresenceTest implements Question<SubstantialPresence> {
             .viewedBy(actor)
             .asString();
 
-        if (result.contains("not")) {
-            return SubstantialPresence.DOES_NOT_HAVE;
-        } else {
-            return SubstantialPresence.HAS;
+        if (result.equals("")) {
+            return SubstantialPresence.NO_RESULT;
         }
+
+        if (result.contains("do not have")) {
+            return SubstantialPresence.DOES_NOT_HAVE_PRESENCE;
+        }
+
+        return SubstantialPresence.HAS_PRESENCE;
     }
 
     public static PresenceTest result() {
