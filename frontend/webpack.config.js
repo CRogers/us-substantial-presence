@@ -7,7 +7,7 @@ module.exports = {
         publicPath: '',
         filename: 'app.js'
     },
-    target: 'web',
+    target: 'node',
     module: {
         loaders: [
             {test: /\.tsx?/, loader: 'ts-loader'}

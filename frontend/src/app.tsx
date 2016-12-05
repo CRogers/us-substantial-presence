@@ -2,7 +2,9 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Rx from 'rx'
 
-module UsSubPres {
+module UsSubPres.UI {
+    type JsxStream = Rx.Observable<JSX.Element>;
+
     let container = document.createElement('div');
     document.body.appendChild(container);
 
@@ -12,9 +14,9 @@ module UsSubPres {
     let travelHistoryUI: JSX.Element = <textarea onChange={ev => travelHistoryEvents.onNext(ev)} className="travel-history"></textarea>;
 
     let testResult: Rx.Observable<boolean> = travelHistoryText.map(str => str.length > 0);
-    let testResultUI: Rx.Observable<JSX.Element> = testResult.map(b => <div className="test-result">You do{b ? '' : ' not'} have Substantial Presence</div>)
+    let testResultUI: JsxStream = testResult.map(b => <div className="test-result">You do{b ? '' : ' not'} have Substantial Presence</div>)
 
-    let wholeUI: Rx.Observable<JSX.Element> = testResultUI.map((testResultElement) =>
+    let wholeUI: JsxStream = testResultUI.map((testResultElement) =>
         <div>
             {travelHistoryUI}
             {testResultElement}
