@@ -3,15 +3,25 @@ import * as ReactDOM from 'react-dom'
 import * as Rx from 'rx'
 
 module UsSubPres {
+    let container = document.createElement('div');
+    document.body.appendChild(container);
 
-    let b = Rx.Observable.just(3);
+    let travelHistoryEvents: Rx.Subject<React.FormEvent<HTMLTextAreaElement>> = new Rx.Subject<React.FormEvent<HTMLTextAreaElement>>();
+    let travelHistoryText: Rx.Observable<string> = travelHistoryEvents.map(ev => (ev.target as HTMLTextAreaElement).value).startWith('');
 
-    ReactDOM.render(
+    let travelHistoryUI: JSX.Element = <textarea onChange={ev => travelHistoryEvents.onNext(ev)} className="travel-history"></textarea>;
+
+    let testResult: Rx.Observable<boolean> = travelHistoryText.map(str => str.length > 0);
+    let testResultUI: Rx.Observable<JSX.Element> = testResult.map(b => <div className="test-result">You do{b ? '' : ' not'} have Substantial Presence</div>)
+
+    let wholeUI: Rx.Observable<JSX.Element> = testResultUI.map((testResultElement) =>
         <div>
-            <textarea className="travel-history"></textarea>
-            <div className="test-result"></div>
+            {travelHistoryUI}
+            {testResultElement}
         </div>
-        ,
-        document.getElementsByTagName('body')[0]
     );
+
+    wholeUI.subscribeOnNext(element => {
+        ReactDOM.render(element, container)
+    });
 }
