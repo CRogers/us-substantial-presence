@@ -13,29 +13,31 @@ export module UsSubPres.Parser {
         constructor(public entry: PortVisit, public exit: PortVisit) {}
 
         public timeInUs(): moment.Range {
-            return moment.range(this.entry.time, this.exit.time)
+            return moment.range(this.entry.time, this.exit.time.clone().add(1, 'day'))
         }
 
         public adjustedDaysAt(time: moment.Moment): AdjustedDays {
             let oneYearAgo = time.clone().subtract(1, 'year');
             let twoYearsAgo = time.clone().subtract(2, 'years');
+            let threeYearsAgo = time.clone().subtract(3, 'years');
 
-            let oneToTwoYearsAgo = moment.range(twoYearsAgo, oneYearAgo);
             let oneYearAgoUntilNow = moment.range(oneYearAgo, time);
+            let oneToTwoYearsAgo = moment.range(twoYearsAgo, oneYearAgo);
+            let twoToThreeYearsAgo = moment.range(threeYearsAgo, twoYearsAgo);
 
             return this.daysInUsForRange(oneYearAgoUntilNow)
-                +  this.daysInUsForRange(oneToTwoYearsAgo) / 3;
+                +  this.daysInUsForRange(oneToTwoYearsAgo) / 3
+                +  this.daysInUsForRange(twoToThreeYearsAgo) / 6;
 
         }
 
         private daysInUsForRange(range: moment.Range): AdjustedDays {
             let timeInUsInRange = range.intersect(this.timeInUs());
-
             if (timeInUsInRange === null) {
                 return 0;
             }
 
-            return rangeToDuration(timeInUsInRange).asDays()
+            return rangeToDuration(timeInUsInRange).asDays();
         }
     }
 

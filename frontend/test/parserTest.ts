@@ -46,17 +46,26 @@ module UsSubPres.Tests {
     describe('Trip should', () => {
         it('gives days:adjustedDays 1:1 within the last year', () => {
             let trip = new Parser.Trip(
-                {port: JFK, time: moment('2016-09-12')},
-                {port: JFK, time: moment('2016-09-16')}
+                {port: JFK, time: moment('2016-09-10')},
+                {port: JFK, time: moment('2016-09-15')}
             );
 
-            expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(4);
+            expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(6);
         });
 
         it('gives days:adjustedDays 3:1 if all in 1-2 years ago', () => {
             let trip = new Parser.Trip(
                 {port: JFK, time: moment('2015-09-10')},
-                {port: JFK, time: moment('2015-09-16')}
+                {port: JFK, time: moment('2015-09-15')}
+            );
+
+            expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(2);
+        });
+
+        it('gives days:adjustedDays 6:1 if all in 2-3 years ago', () => {
+            let trip = new Parser.Trip(
+                {port: JFK, time: moment('2014-08-01')},
+                {port: JFK, time: moment('2014-08-12')}
             );
 
             expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(2);
