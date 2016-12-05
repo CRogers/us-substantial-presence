@@ -12,23 +12,23 @@ export module UsSubPres.Parser {
     export class Trip {
         constructor(public entry: PortVisit, public exit: PortVisit) {}
 
-        public timeInUs(): moment.Range {
-            return moment.range(this.entry.time, this.exit.time.clone().add(1, 'day'))
+        public adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays {
+            let oneYearAgo = date.clone().subtract(1, 'year');
+            let oneYearAgoUntilNow = moment.range(oneYearAgo, date);
+            return this.daysInUsForRange(oneYearAgoUntilNow);
         }
 
-        public adjustedDaysAt(time: moment.Moment): AdjustedDays {
-            let oneYearAgo = time.clone().subtract(1, 'year');
-            let twoYearsAgo = time.clone().subtract(2, 'years');
-            let threeYearsAgo = time.clone().subtract(3, 'years');
+        public adjustedDaysAt(date: moment.Moment): AdjustedDays {
+            let oneYearAgo = date.clone().subtract(1, 'year');
+            let twoYearsAgo = date.clone().subtract(2, 'years');
+            let threeYearsAgo = date.clone().subtract(3, 'years');
 
-            let oneYearAgoUntilNow = moment.range(oneYearAgo, time);
             let oneToTwoYearsAgo = moment.range(twoYearsAgo, oneYearAgo);
             let twoToThreeYearsAgo = moment.range(threeYearsAgo, twoYearsAgo);
 
-            return this.daysInUsForRange(oneYearAgoUntilNow)
+            return this.adjustedDaysInTheLastYearAt(date)
                 +  this.daysInUsForRange(oneToTwoYearsAgo) / 3
                 +  this.daysInUsForRange(twoToThreeYearsAgo) / 6;
-
         }
 
         private daysInUsForRange(range: moment.Range): AdjustedDays {
@@ -38,6 +38,10 @@ export module UsSubPres.Parser {
             }
 
             return rangeToDuration(timeInUsInRange).asDays();
+        }
+
+        private timeInUs(): moment.Range {
+            return moment.range(this.entry.time, this.exit.time.clone().add(1, 'day'))
         }
     }
 
