@@ -8,7 +8,7 @@ import * as ParserM from '../src/parser'
 
 module UsSubPres.Tests {
     import Parser = ParserM.UsSubPres.Parser;
-    import TravelHistory = Parser.TravelHistory;
+    import TravelHistory = Parser.DefaultTravelHistory;
     import DefaultTrip = Parser.DefaultTrip;
 
     let JFK = 'JFK - JOHN F KENNEDY INTL';
@@ -16,7 +16,7 @@ module UsSubPres.Tests {
     describe('Parser should', () => {
         it('parse the empty string to no trips', () => {
             let travelHistory = Parser.parseTravelHistory('');
-            expect(travelHistory).deep.equal({trips: []})
+            expect(travelHistory).deep.equal(new TravelHistory([]))
         });
 
         it('parse a single trip', () => {
@@ -74,6 +74,41 @@ module UsSubPres.Tests {
         });
     });
 
+    describe('DefaultTravelHistory should', () => {
+        let someDate = moment('2016-11-11');
+
+        function aTripWithAdjustedDays(total: number, inLastYear: number): Parser.Trip {
+            return {
+                adjustedDaysAt: (date) => {
+                    expect(date).to.deep.equal(someDate);
+                    return total;
+                },
+                adjustedDaysInTheLastYearAt: (date) => {
+                    expect(date).to.deep.equal(someDate);
+                    return inLastYear;
+                }
+            }
+        }
+
+        it('with one trip with 56 adjusted days (44 in the last year) should show exactly that', () => {
+            let travelHistory = new Parser.DefaultTravelHistory([
+                aTripWithAdjustedDays(56, 44)
+            ]);
+
+            expect(travelHistory.adjustedDaysAt(someDate)).to.equal(56);
+            expect(travelHistory.adjustedDaysInTheLastYearAt(someDate)).to.equal(44);
+        });
+
+        it('with two trips it should sum the total and last year adjusted days', () => {
+            let travelHistory = new Parser.DefaultTravelHistory([
+                aTripWithAdjustedDays(2, 3),
+                aTripWithAdjustedDays(10, 20)
+            ]);
+
+            expect(travelHistory.adjustedDaysAt(someDate)).to.equal(12);
+            expect(travelHistory.adjustedDaysInTheLastYearAt(someDate)).to.equal(23);
+        });
+    });
 
 
     function stripIndent(rawText: string) {

@@ -3,22 +3,36 @@ import * as moment from 'moment'
 import 'moment-range'
 
 export module UsSubPres.Parser {
-    export class TravelHistory {
+
+    export interface TravelHistory {
+        adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
+        adjustedDaysAt(date: moment.Moment): AdjustedDays;
+    }
+
+    export class DefaultTravelHistory implements TravelHistory {
         constructor(public trips: Trip[]) {}
 
+        public adjustedDaysAt(someDate: moment.Moment): AdjustedDays {
+            return _(this.trips)
+                .map(trip => trip.adjustedDaysAt(someDate))
+                .reduce((a, b) => a + b, 0);
+        }
 
+        public adjustedDaysInTheLastYearAt(someDate: moment.Moment): AdjustedDays {
+            return _(this.trips)
+                .map(trip => trip.adjustedDaysInTheLastYearAt(someDate))
+                .reduce((a, b) => a + b, 0);
+        }
     }
 
     export type AdjustedDays = number;
 
     export interface Trip {
-        entry: PortVisit,
-        exit: PortVisit,
         adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
         adjustedDaysAt(date: moment.Moment): AdjustedDays;
     }
 
-    export class DefaultTrip {
+    export class DefaultTrip implements Trip {
         constructor(public entry: PortVisit, public exit: PortVisit) {}
 
         public adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays {
@@ -65,9 +79,9 @@ export module UsSubPres.Parser {
 
     export type Port = string;
 
-    export function parseTravelHistory(str: string): TravelHistory {
+    export function parseTravelHistory(str: string): DefaultTravelHistory {
         if (str.length == 0) {
-            return { trips: [] }
+            return new DefaultTravelHistory([]);
         }
 
         let nonEmptyLine = (line: string) => !/^\s*$/.test(line);
@@ -80,9 +94,9 @@ export module UsSubPres.Parser {
 
         let trip = _.drop(trimmedLines, 1);
 
-        return {
-            trips: [parseTrip(trip)]
-        }
+        return new DefaultTravelHistory([
+            parseTrip(trip)
+        ]);
     }
 
     function parseTrip(trip: string[]): Trip {

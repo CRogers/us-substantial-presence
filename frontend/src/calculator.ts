@@ -5,13 +5,12 @@ import moment = require("moment");
 export module UsSubPres.Calculator {
     import Parser = ParserM.UsSubPres.Parser;
 
-    let NUMBER_OF_DAYS_ALLOWED_IN_US = 183;
+    let TOTAL_DAYS_TO_GET_PRESENCE = 183;
+    let CURRENT_YEAR_DAYS_TO_GET_PRESENCE = 31;
 
     export function calculate(tripHistory: Parser.TravelHistory, atDate: moment.Moment): boolean {
-        if (tripHistory.trips.length == 0) {
-            return false;
-        }
-        let firstTrip = tripHistory.trips[0];
-        return firstTrip.adjustedDaysAt(atDate) >= NUMBER_OF_DAYS_ALLOWED_IN_US;
+        let enoughTotalAdjustedDays = tripHistory.adjustedDaysAt(atDate) >= TOTAL_DAYS_TO_GET_PRESENCE;
+        let enoughDaysInTheLastYear = tripHistory.adjustedDaysInTheLastYearAt(atDate) >= CURRENT_YEAR_DAYS_TO_GET_PRESENCE;
+        return enoughTotalAdjustedDays && enoughDaysInTheLastYear;
     }
 }
