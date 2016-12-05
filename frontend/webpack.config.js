@@ -7,6 +7,7 @@ module.exports = {
         publicPath: '',
         filename: 'app.js'
     },
+    target: 'web',
     module: {
         loaders: [
             {test: /\.tsx?/, loader: 'ts-loader'}
@@ -14,7 +15,7 @@ module.exports = {
     },
     resolve: {
         extensions: ["", ".js", ".ts", ".tsx"],
-        moduleDirectories: ['src']
+        moduleDirectories: ['src', 'node_modules']
     },
     plugins: [
         new HtmlWebpackPlugin({

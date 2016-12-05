@@ -7,15 +7,16 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.annotations.Managed;
+import net.thucydides.core.annotations.Steps;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import presence.steps.OpenPage;
 
 import static net.serenitybdd.screenplay.EventualConsequence.eventually;
 import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
@@ -43,10 +44,11 @@ public class CanOpenPage {
         callum.can(BrowseTheWeb.with(callumsBrowser));
     }
 
+    @Steps private OpenPage openPage;
+
     @Test
     public void canOpenPage() {
-        String targetUrl = "file:///site/index.html";
-        givenThat(callum).attemptsTo(Open.url(targetUrl));
+        givenThat(callum).wasAbleTo(openPage);
 
         Question<String> itIsChristmas = actor -> Text.of(Target
             .the("Is it Xmas?")
@@ -56,5 +58,10 @@ public class CanOpenPage {
         then(callum).should(eventually(seeThat(
             itIsChristmas, is("Hi")
         )));
+    }
+
+    @Test
+    public void enter_travel_history_into_textbox_and_see_that_they_do_not_have_substantial_presence() {
+
     }
 }
