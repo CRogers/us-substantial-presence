@@ -84,8 +84,13 @@ export module UsSubPres.Parser {
 
     function parsePortVisit(portVisit: string[]): PortVisit {
         return {
-            time: moment(portVisit[0]),
+            time: onlyDate(portVisit[0]),
             port: portVisit[1]
         }
+    }
+
+    function onlyDate(dateAndTime: string): moment.Moment {
+        let justDateStr = dateAndTime.split('T')[0];
+        return moment(justDateStr);
     }
 }

@@ -31,11 +31,11 @@ module UsSubPres.Tests {
                     new Parser.Trip(
                         {
                             port: JFK,
-                            time: moment('2016-09-12T11:55:54.0-04:00')
+                            time: moment('2016-09-12')
                         },
                         {
                             port: 'NYC - NEW YORK CITY, NY',
-                            time: moment('2016-09-16T00:00:00.0-04:00')
+                            time: moment('2016-09-16')
                         }
                     )
                 ]
