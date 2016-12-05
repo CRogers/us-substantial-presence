@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import * as moment from 'moment'
 
 export module UsSubPres.Parser {
     export interface TravelHistory {
@@ -12,7 +13,7 @@ export module UsSubPres.Parser {
 
     export interface PortVisit {
         port: Port;
-        time: Date;
+        time: moment.Moment;
     }
 
     export type Port = string;
@@ -49,7 +50,7 @@ export module UsSubPres.Parser {
 
     function parsePortVisit(portVisit: string[]): PortVisit {
         return {
-            time: new Date(portVisit[0]),
+            time: moment(portVisit[0]),
             port: portVisit[1]
         }
     }

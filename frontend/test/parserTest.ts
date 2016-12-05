@@ -2,6 +2,7 @@ import 'mocha'
 import { expect } from 'chai'
 
 import * as _ from 'lodash'
+import * as moment from 'moment';
 
 import * as ParserM from '../src/parser'
 let Parser = ParserM.UsSubPres.Parser;
@@ -27,11 +28,11 @@ module UsSubPres.Tests {
                     {
                         entry: {
                             port: 'JFK - JOHN F KENNEDY INTL',
-                            time: new Date('2016-09-12T11:55:54.0-04:00')
+                            time: moment('2016-09-12T11:55:54.0-04:00')
                         },
                         exit: {
                             port: 'NYC - NEW YORK CITY, NY',
-                            time: new Date('2016-09-16T00:00:00.0-04:00')
+                            time: moment('2016-09-16T00:00:00.0-04:00')
                         }
                     }
 
@@ -49,7 +50,6 @@ module UsSubPres.Tests {
         let trimmedLines = _(lines)
             .map(line => line.substring(minIndent))
             .value();
-        let overall = trimmedLines.join('\n');
-        return overall;
+        return trimmedLines.join('\n');
     }
 }
