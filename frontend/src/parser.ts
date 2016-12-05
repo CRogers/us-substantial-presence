@@ -7,12 +7,22 @@ export module UsSubPres.Parser {
         trips: Trip[];
     }
 
+    export type AdjustedDays = number;
+
     export class Trip {
         constructor(public entry: PortVisit, public exit: PortVisit) {}
 
         public timeInUs(): moment.Range {
             return moment.range(this.entry.time, this.exit.time)
         }
+
+        public adjustedDaysAt(time: moment.Moment): AdjustedDays {
+            return rangeToDuration(this.timeInUs()).asDays()
+        }
+    }
+
+    function rangeToDuration(range: moment.Range): moment.Duration {
+        return moment.duration(range.end.diff(range.start));
     }
 
     export interface PortVisit {

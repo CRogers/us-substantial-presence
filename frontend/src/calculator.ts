@@ -12,6 +12,6 @@ export module UsSubPres.Calculator {
             return false;
         }
         let firstTrip = tripHistory.trips[0];
-        return moment.duration(firstTrip.exit.time.diff(firstTrip.entry.time)).asDays() >= NUMBER_OF_DAYS_ALLOWED_IN_US;
+        return firstTrip.adjustedDaysAt(null) >= NUMBER_OF_DAYS_ALLOWED_IN_US;
     }
 }

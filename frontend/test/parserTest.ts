@@ -5,9 +5,12 @@ import * as _ from 'lodash'
 import * as moment from 'moment';
 
 import * as ParserM from '../src/parser'
-let Parser = ParserM.UsSubPres.Parser;
 
 module UsSubPres.Tests {
+    import Parser = ParserM.UsSubPres.Parser;
+
+    let JFK = 'JFK - JOHN F KENNEDY INTL';
+
     describe('Parser should', () => {
         it('parse the empty string to no trips', () => {
             let travelHistory = Parser.parseTravelHistory('');
@@ -27,7 +30,7 @@ module UsSubPres.Tests {
                 trips: [
                     new Parser.Trip(
                         {
-                            port: 'JFK - JOHN F KENNEDY INTL',
+                            port: JFK,
                             time: moment('2016-09-12T11:55:54.0-04:00')
                         },
                         {
@@ -38,6 +41,17 @@ module UsSubPres.Tests {
                 ]
             })
         })
+    });
+
+    describe('Trip should', () => {
+        it('gives days:adjustedDays 1:1 within the last year', () => {
+            let trip = new Parser.Trip(
+                {port: JFK, time: moment('2016-09-12')},
+                {port: JFK, time: moment('2016-09-16')}
+            );
+
+            expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(4);
+        });
     });
 
     function stripIndent(rawText: string) {
