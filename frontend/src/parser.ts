@@ -3,13 +3,22 @@ import * as moment from 'moment'
 import 'moment-range'
 
 export module UsSubPres.Parser {
-    export interface TravelHistory {
-        trips: Trip[];
+    export class TravelHistory {
+        constructor(public trips: Trip[]) {}
+
+
     }
 
     export type AdjustedDays = number;
 
-    export class Trip {
+    export interface Trip {
+        entry: PortVisit,
+        exit: PortVisit,
+        adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
+        adjustedDaysAt(date: moment.Moment): AdjustedDays;
+    }
+
+    export class DefaultTrip {
         constructor(public entry: PortVisit, public exit: PortVisit) {}
 
         public adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays {
@@ -80,7 +89,7 @@ export module UsSubPres.Parser {
         let entry = _.take(trip, 2);
         let exit = _.drop(trip, 2);
 
-        return new Trip(
+        return new DefaultTrip(
             parsePortVisit(entry),
             parsePortVisit(exit)
         );
