@@ -2,6 +2,8 @@ import * as _ from 'lodash'
 import * as moment from 'moment'
 import 'moment-range'
 
+import { Optional } from './optional'
+
 export module UsSubPres.Parser {
 
     export interface TravelHistory {
@@ -79,11 +81,15 @@ export module UsSubPres.Parser {
 
     export type Port = string;
 
-    export function parseTravelHistory(str: string): DefaultTravelHistory {
-        if (str.length == 0) {
-            return new DefaultTravelHistory([]);
+    export function parseTravelHistory(str: string): Optional<DefaultTravelHistory> {
+        try {
+            return Optional.of(parseTravelHistoryThrowingErrors(str));
+        } catch (e) {
+            return Optional.empty<DefaultTravelHistory>();
         }
+    }
 
+    export function parseTravelHistoryThrowingErrors(str: string): DefaultTravelHistory {
         let nonEmptyLine = (line: string) => !/^\s*$/.test(line);
 
         let trimmedLines = _(str)

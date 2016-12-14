@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
     "jsx": "react",
-    "allowSyntheticDefaultImports": true
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es5"
   }
 }

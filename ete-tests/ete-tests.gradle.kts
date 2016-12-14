@@ -21,7 +21,7 @@ apply {
 }
 
 dependencies {
-    testCompile("org.seleniumhq.selenium:selenium-firefox-driver:3.0.1")
+    testCompile("org.seleniumhq.selenium:selenium-chrome-driver:3.0.1")
 
     val serenityVersion = "1.1.42"
     testCompile("net.serenity-bdd:serenity-core:$serenityVersion")

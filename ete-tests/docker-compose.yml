@@ -2,10 +2,10 @@ version: '2'
 
 services:
   selenium:
-    image: selenium/standalone-firefox-debug:3.0.1-barium
+    image: selenium/standalone-chrome-debug:3.0.1-barium
     ports:
       - 4444:4444
-      - 5902:5902
+      - 5902:5900
     environment:
       no_proxy: localhost #https://forums.docker.com/t/space-in-new-no-proxy-env-var-breaking-old-containers/14075
 

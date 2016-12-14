@@ -16,7 +16,7 @@ module UsSubPres.Tests {
     describe('Parser should', () => {
         it('parse the empty string to no trips', () => {
             let travelHistory = Parser.parseTravelHistory('');
-            expect(travelHistory).deep.equal(new TravelHistory([]))
+            expect(travelHistory.get()).deep.equal(new TravelHistory([]))
         });
 
         it('parse a single trip', () => {
@@ -28,7 +28,7 @@ module UsSubPres.Tests {
                 NYC - NEW YORK CITY, NY
             `);
 
-            expect(Parser.parseTravelHistory(rawText)).to.deep.equal(
+            expect(Parser.parseTravelHistory(rawText).get()).to.deep.equal(
                 new TravelHistory([
                     new DefaultTrip(
                         {
