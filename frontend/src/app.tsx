@@ -3,14 +3,11 @@ import * as ReactDOM from 'react-dom'
 import * as Rx from 'rx'
 import * as moment from 'moment'
 
-import * as ParserM from './parser'
-import * as CalculatorM from './calculator'
+import * as Parser from './parser'
+import * as Calculator from './calculator'
 import {Optional} from "./optional";
 
 module UsSubPres.UI {
-    import Parser = ParserM.UsSubPres.Parser;
-    import Calculator = CalculatorM.UsSubPres.Calculator;
-
     type JsxStream = Rx.Observable<JSX.Element>;
 
     let container = document.createElement('div');
