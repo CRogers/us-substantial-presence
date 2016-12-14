@@ -2,7 +2,7 @@
 
 set -eu
 
-./install-nix
+source install-nix
 
 nix-shell --run "npm install"
 nix-shell --run "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --open --content-base site"
