@@ -2,7 +2,4 @@
 
 set -eu
 
-source install-nix
-
-nix-shell --run "npm install"
-nix-shell --run "./node_modules/webpack/bin/webpack.js"
+./run-with-node "./node_modules/webpack/bin/webpack.js"

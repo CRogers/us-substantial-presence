@@ -2,6 +2,8 @@
 
 set -eu
 
+COMMAND_TO_RUN="$1"
+
 function install_nix() {
     if ! ls /nix >/dev/null 2>&1; then
         echo "Installing the nix pacakge manager: http://nixos.org/nix/"
@@ -13,3 +15,5 @@ install_nix
 
 echo "Loading nix into shell"
 . ~/.nix-profile/etc/profile.d/nix.sh
+
+nix-shell --run "npm install && $COMMAND_TO_RUN"
