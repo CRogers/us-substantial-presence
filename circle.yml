@@ -10,6 +10,8 @@ machine:
     version: oraclejdk8
 
 test:
+  pre:
+    - cd frontend && ./run-with-node "echo caching"
   override:
     - cd frontend && ./tests
     - ./gradlew --continue -is etes
