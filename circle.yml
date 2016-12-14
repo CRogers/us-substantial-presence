@@ -1,11 +1,13 @@
 general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
   environment:
     TERM: dumb
   java:
     version: oraclejdk8
-  branches:
-    ignore:
-      - gh-pages
 
 test:
   override:
@@ -15,8 +17,8 @@ test:
     - cp -r frontend/target/ $CIRCLE_ARTIFACTS/etes-report
 
 deployment:
-  master:
-    branch: master
+  develop:
+    branch: develop
     owner: CRogers
     commands:
       - ./scripts/deploy-gh-pages.sh
