@@ -1,5 +1,6 @@
 export abstract class Optional<T> {
     public abstract get: () => T;
+    public abstract isEmpty: () => boolean;
     public abstract map: <U> (func: (value: T) => U) => Optional<U>;
     public abstract orElse: (otherValue: T) => T;
 
@@ -19,6 +20,10 @@ class OptionalFull<T> implements Optional<T> {
         return this.value;
     }
 
+    public isEmpty(): boolean {
+        return false;
+    }
+
     public map<U>(func: (value: T) => U): Optional<U> {
         return new OptionalFull(func(this.value));
     }
@@ -31,6 +36,10 @@ class OptionalFull<T> implements Optional<T> {
 class OptionalEmpty<T> implements Optional<T> {
     public get(): T {
         throw new Error("Cannot get from Optional.empty");
+    }
+
+    public isEmpty(): boolean {
+        return true;
     }
 
     public map<U>(func: (value: T) => U): Optional<U> {

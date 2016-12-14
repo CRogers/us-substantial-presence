@@ -12,9 +12,9 @@ import DefaultTrip = Parser.DefaultTrip;
 let JFK = 'JFK - JOHN F KENNEDY INTL';
 
 describe('Parser should', () => {
-    it('parse the empty string to no trips', () => {
+    it('parse the empty string to optional empty', () => {
         let travelHistory = Parser.parseTravelHistory('');
-        expect(travelHistory.get()).deep.equal(new TravelHistory([]))
+        expect(travelHistory.isEmpty()).to.be.true
     });
 
     it('parse a single trip', () => {
