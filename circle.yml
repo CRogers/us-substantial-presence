@@ -9,6 +9,10 @@ machine:
   java:
     version: oraclejdk8
 
+dependencies:
+  cache_directories:
+    - ~/.gradle
+
 test:
   pre:
     - cd frontend && ./run-with-node "echo caching"
