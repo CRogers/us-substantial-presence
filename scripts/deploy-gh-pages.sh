@@ -9,9 +9,11 @@ HASH_MESSAGE="$(git show --oneline | head -n1)"
 
 git checkout --orphan gh-pages
 
-echo * | tr -clearReports " " "\n" | grep -v -E "build|circle\.yml" | xargs rm -rf
-cp build/* .
-rm -rf build/
+cp frontend/site/ site/
+
+echo * | tr -clearReports " " "\n" | grep -v -E "site|circle\.yml" | xargs rm -rf
+cp site/* .
+rm -rf site/
 
 git add --all .
 
