@@ -16,7 +16,7 @@ test:
     - cd frontend && ./tests
     - ./gradlew --continue -is etes
   post:
-    - cp -r frontend/target/ $CIRCLE_ARTIFACTS/etes-report
+    - cp -r ete-tests/target/ $CIRCLE_ARTIFACTS/etes-report
 
 deployment:
   develop:
