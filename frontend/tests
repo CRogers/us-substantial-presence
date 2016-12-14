@@ -4,4 +4,4 @@ set -eu
 
 ./install-nix
 
-./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config webpack.config-test.js --watch test/**/*.ts
+./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config webpack.config-test.js test/**/*.ts
