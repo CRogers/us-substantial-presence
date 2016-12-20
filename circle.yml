@@ -19,7 +19,8 @@ machine:
 dependencies:
   cache_directories:
     - ~/.gradle
-    - /nix/store
+    - /nix
+    - ~/.nix-profile
   override:
     - cd frontend && ./run-with-node "echo caching"
     - ./gradlew --continue -is compileJava
