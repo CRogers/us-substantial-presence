@@ -1,0 +1,40 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+    - /home/ubuntu/$CIRCLE_PROJECT_REPONAME/scripts/download-docker-compose.sh
+    - docker-compose version
+  services:
+    - docker
+  environment:
+    TERM: dumb
+    DOCKER_COMPOSE_LOCATION: /home/ubuntu/bin/docker-compose
+  java:
+    version: oraclejdk8
+
+dependencies:
+  cache_directories:
+    - ~/.gradle
+    - /nix
+    - ~/.nix-profile
+  override:
+    - cd frontend && ./run-with-node "echo caching"
+    - ./gradlew -is compileJava
+
+test:
+  override:
+    - cd frontend && ./tests
+    - ./gradlew --continue -is etes
+  post:
+    - cp -r ete-tests/target/ $CIRCLE_ARTIFACTS/etes-report
+
+deployment:
+  develop:
+    branch: develop
+    owner: CRogers
+    commands:
+      - ./scripts/deploy-gh-pages.sh
