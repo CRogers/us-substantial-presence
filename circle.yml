@@ -9,6 +9,7 @@ machine:
     - docker-compose version
   environment:
     TERM: dumb
+    DOCKER_COMPOSE_LOCATION: /home/ubuntu/bin/docker-compose
   java:
     version: oraclejdk8
 
