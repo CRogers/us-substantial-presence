@@ -7,6 +7,8 @@ machine:
   pre:
     - /home/ubuntu/$CIRCLE_PROJECT_REPONAME/scripts/download-docker-compose.sh
     - docker-compose version
+  services:
+    - docker
   environment:
     TERM: dumb
     DOCKER_COMPOSE_LOCATION: /home/ubuntu/bin/docker-compose
@@ -16,6 +18,7 @@ machine:
 dependencies:
   cache_directories:
     - ~/.gradle
+    - /nix/store
 
 test:
   pre:
