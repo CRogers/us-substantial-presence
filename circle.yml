@@ -34,4 +34,4 @@ deployment:
     branch: develop
     owner: CRogers
     commands:
-      - ./scripts/deploy-gh-pages.sh
+      - echo hi # ./scripts/deploy-gh-pages.sh
