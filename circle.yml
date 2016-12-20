@@ -5,7 +5,7 @@ general:
 
 machine:
   pre:
-    - /home/ubuntu/us-substantial-presence/scripts/download-docker-compose.sh
+    - /home/ubuntu/$CIRCLE_PROJECT_REPONAME/scripts/download-docker-compose.sh
   environment:
     TERM: dumb
   java:
