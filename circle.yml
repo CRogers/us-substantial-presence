@@ -23,7 +23,7 @@ dependencies:
     - ~/.nix-profile
   override:
     - cd frontend && ./run-with-node "echo caching"
-    - ./gradlew --continue -is compileJava
+    - ./gradlew -is compileJava
 
 test:
   override:
@@ -37,4 +37,4 @@ deployment:
     branch: develop
     owner: CRogers
     commands:
-      - echo hi # ./scripts/deploy-gh-pages.sh
+      - ./scripts/deploy-gh-pages.sh
