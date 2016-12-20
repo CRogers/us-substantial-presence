@@ -19,13 +19,14 @@ dependencies:
   cache_directories:
     - ~/.gradle
     - /nix/store
+  override:
+    - cd frontend && ./run-with-node "echo caching"
+    - ./gradlew --continue -is compileJava
 
 test:
-  pre:
-    - cd frontend && ./run-with-node "echo caching"
   override:
     - cd frontend && ./tests
-    - ./gradlew --continue -is compileJava
+    - ./gradlew --continue -is etes
   post:
     - cp -r ete-tests/target/ $CIRCLE_ARTIFACTS/etes-report
 
