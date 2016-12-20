@@ -4,8 +4,10 @@ set -eu
 
 COMMAND_TO_RUN="$1"
 
+NIX_PROFILE_SCRIPT="$HOME/.nix-profile/etc/profile.d/nix.sh"
+
 function install_nix() {
-    if ! ls /nix >/dev/null 2>&1; then
+    if  [ ! -e "$NIX_PROFILE_SCRIPT" ]; then
         echo "Installing the nix pacakge manager: http://nixos.org/nix/"
         curl https://nixos.org/nix/install | sh
     fi
@@ -14,6 +16,6 @@ function install_nix() {
 install_nix
 
 echo "Loading nix into shell"
-. ~/.nix-profile/etc/profile.d/nix.sh
+. "$NIX_PROFILE_SCRIPT"
 
 nix-shell --run "npm install && $COMMAND_TO_RUN"
