@@ -5,6 +5,7 @@ general:
 
 machine:
   pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - /home/ubuntu/$CIRCLE_PROJECT_REPONAME/scripts/download-docker-compose.sh
     - docker-compose version
   services:
