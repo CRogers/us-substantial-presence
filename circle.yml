@@ -22,7 +22,7 @@ test:
     - cd frontend && ./run-with-node "echo caching"
   override:
     - cd frontend && ./tests
-    - ./gradlew --continue -is etes
+    - ./gradlew --continue -is compileJava
   post:
     - cp -r ete-tests/target/ $CIRCLE_ARTIFACTS/etes-report
 
