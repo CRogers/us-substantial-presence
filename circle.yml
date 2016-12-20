@@ -4,6 +4,8 @@ general:
       - gh-pages
 
 machine:
+  pre:
+    - /home/ubuntu/us-substantial-presence/scripts/download-docker-compose.sh
   environment:
     TERM: dumb
   java:
