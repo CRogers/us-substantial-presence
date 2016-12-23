@@ -80,6 +80,10 @@ export interface PortVisit {
 export type Port = string;
 
 export function parseTravelHistory(str: string): Optional<DefaultTravelHistory> {
+    if (str.trim().length == 0) {
+        return Optional.empty<DefaultTravelHistory>();
+    }
+
     try {
         return Optional.of(parseTravelHistoryThrowingErrors(str));
     } catch (e) {
@@ -88,19 +92,22 @@ export function parseTravelHistory(str: string): Optional<DefaultTravelHistory> 
 }
 
 export function parseTravelHistoryThrowingErrors(str: string): DefaultTravelHistory {
-    let nonEmptyLine = (line: string) => !/^\s*$/.test(line);
+    const nonEmptyLine = (line: string) => !/^\s*$/.test(line);
 
-    let trimmedLines = _(str)
+    const trimmedLines = _(str)
         .split('\n')
         .filter(nonEmptyLine)
         .map(line => line.trim())
         .value();
 
-    let trip = _.drop(trimmedLines, 1);
+    const chunks = _(trimmedLines)
+        .chunk(5)
+        .map(chunk => _.drop(chunk, 1))
+        .value();
 
-    return new DefaultTravelHistory([
-        parseTrip(trip)
-    ]);
+    const trips = _.map(chunks, parseTrip);
+
+    return new DefaultTravelHistory(trips);
 }
 
 function parseTrip(trip: string[]): Trip {

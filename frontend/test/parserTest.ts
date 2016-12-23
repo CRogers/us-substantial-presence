@@ -10,6 +10,7 @@ import TravelHistory = Parser.DefaultTravelHistory;
 import DefaultTrip = Parser.DefaultTrip;
 
 let JFK = 'JFK - JOHN F KENNEDY INTL';
+let NYC = 'NYC - NEW YORK CITY, NY';
 
 describe('Parser should', () => {
     it('parse the empty string to optional empty', () => {
@@ -34,8 +35,48 @@ describe('Parser should', () => {
                         time: moment('2016-09-12')
                     },
                     {
-                        port: 'NYC - NEW YORK CITY, NY',
+                        port: NYC,
                         time: moment('2016-09-16')
+                    }
+                )
+            ])
+        );
+    });
+    it('parse two trips', () => {
+        let rawText = stripIndent(`
+            1\t
+            2016-09-12T11:55:54.0-04:00
+            JFK - JOHN F KENNEDY INTL\t
+            2016-09-16T00:00:00.0-04:00
+            NYC - NEW YORK CITY, NY
+            
+            2\t
+            2015-05-05T11:55:54.0-04:00
+            JFK - JOHN F KENNEDY INTL\t
+            2015-05-10T00:00:00.0-04:00
+            NYC - NEW YORK CITY, NY
+        `);
+
+        expect(Parser.parseTravelHistory(rawText).get()).to.deep.equal(
+            new TravelHistory([
+                new DefaultTrip(
+                    {
+                        port: JFK,
+                        time: moment('2016-09-12')
+                    },
+                    {
+                        port: NYC,
+                        time: moment('2016-09-16')
+                    }
+                ),
+                new DefaultTrip(
+                    {
+                        port: JFK,
+                        time: moment('2015-05-05')
+                    },
+                    {
+                        port: NYC,
+                        time: moment('2015-05-10')
                     }
                 )
             ])
