@@ -33,6 +33,7 @@
     "@types/lodash": "^4.14.41",
     "@types/mocha": "^2.2.33",
     "@types/moment-range": "^2.0.33",
+    "@types/plottable": "^1.4.30",
     "@types/react": "^0.14.52",
     "@types/react-dom": "^0.14.19",
     "@types/rx": "^2.5.34",
