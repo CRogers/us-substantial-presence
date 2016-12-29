@@ -11,7 +11,12 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.tsx?/, loader: 'ts-loader'},
-            {test: /\.less$/, loader: "style!css!less"}
+            {test: /\.css$/, loader: "style!css"},
+            {test: /\.less$/, loader: "style!css!less"},
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file?name=public/fonts/[name].[ext]'
+            }
         ]
     },
     resolve: {
