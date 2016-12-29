@@ -5,22 +5,22 @@ import 'moment-range'
 import { Optional } from './optional'
 
 export interface TravelHistory {
-    adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
-    adjustedDaysAt(date: moment.Moment): AdjustedDays;
+    adjustedDaysInTheLastYearUpTo(date: moment.Moment): AdjustedDays;
+    adjustedDaysUpTo(date: moment.Moment): AdjustedDays;
 }
 
 export class DefaultTravelHistory implements TravelHistory {
     constructor(public trips: Trip[]) {}
 
-    public adjustedDaysAt(someDate: moment.Moment): AdjustedDays {
+    public adjustedDaysUpTo(someDate: moment.Moment): AdjustedDays {
         return _(this.trips)
-            .map(trip => trip.adjustedDaysAt(someDate))
+            .map(trip => trip.adjustedDaysUpTo(someDate))
             .reduce((a, b) => a + b, 0);
     }
 
-    public adjustedDaysInTheLastYearAt(someDate: moment.Moment): AdjustedDays {
+    public adjustedDaysInTheLastYearUpTo(someDate: moment.Moment): AdjustedDays {
         return _(this.trips)
-            .map(trip => trip.adjustedDaysInTheLastYearAt(someDate))
+            .map(trip => trip.adjustedDaysInTheLastYearUpTo(someDate))
             .reduce((a, b) => a + b, 0);
     }
 }
@@ -28,28 +28,33 @@ export class DefaultTravelHistory implements TravelHistory {
 export type AdjustedDays = number;
 
 export interface Trip {
-    adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
-    adjustedDaysAt(date: moment.Moment): AdjustedDays;
+    adjustedDaysInTheLastYearUpTo(date: moment.Moment): AdjustedDays;
+    adjustedDaysUpTo(date: moment.Moment): AdjustedDays;
+}
+
+function tapLog<T>(t: T): T {
+    console.log(t);
+    return t;
 }
 
 export class DefaultTrip implements Trip {
     constructor(public entry: PortVisit, public exit: PortVisit) {}
 
-    public adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays {
-        let oneYearAgo = date.clone().subtract(1, 'year');
-        let oneYearAgoUntilNow = moment.range(oneYearAgo, date);
+    public adjustedDaysInTheLastYearUpTo(date: moment.Moment): AdjustedDays {
+        const startOfCurrentYear = moment(date.clone().year(), 'YYYY');
+        const oneYearAgoUntilNow = moment.range(startOfCurrentYear, date);
         return this.daysInUsForRange(oneYearAgoUntilNow);
     }
 
-    public adjustedDaysAt(date: moment.Moment): AdjustedDays {
-        let oneYearAgo = date.clone().subtract(1, 'year');
-        let twoYearsAgo = date.clone().subtract(2, 'years');
-        let threeYearsAgo = date.clone().subtract(3, 'years');
+    public adjustedDaysUpTo(date: moment.Moment): AdjustedDays {
+        const startOfCurrentYear = moment(date.clone().year(), 'YYYY');
+        const startOfLastYear = startOfCurrentYear.clone().subtract(1, 'year');
+        const startOfTwoYearsAgo = startOfCurrentYear.clone().subtract(2, 'years');
 
-        let oneToTwoYearsAgo = moment.range(twoYearsAgo, oneYearAgo);
-        let twoToThreeYearsAgo = moment.range(threeYearsAgo, twoYearsAgo);
+        let oneToTwoYearsAgo = moment.range(startOfLastYear, startOfCurrentYear);
+        let twoToThreeYearsAgo = moment.range(startOfTwoYearsAgo, startOfLastYear);
 
-        return this.adjustedDaysInTheLastYearAt(date)
+        return this.adjustedDaysInTheLastYearUpTo(date)
             +  this.daysInUsForRange(oneToTwoYearsAgo) / 3
             +  this.daysInUsForRange(twoToThreeYearsAgo) / 6;
     }

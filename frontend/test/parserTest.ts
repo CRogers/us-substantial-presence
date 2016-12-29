@@ -91,25 +91,34 @@ describe('DefaultTrip should', () => {
             {port: JFK, time: moment('2016-09-15')}
         );
 
-        expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(6);
+        expect(trip.adjustedDaysUpTo(moment('2016-09-17'))).to.equal(6);
     });
 
     it('gives days:adjustedDays 3:1 if all in 1-2 years ago', () => {
         let trip = new Parser.DefaultTrip(
-            {port: JFK, time: moment('2015-09-10')},
-            {port: JFK, time: moment('2015-09-15')}
+            {port: JFK, time: moment('2015-03-10')},
+            {port: JFK, time: moment('2015-03-15')}
         );
 
-        expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(2);
+        expect(trip.adjustedDaysUpTo(moment('2016-09-17'))).to.equal(2);
     });
 
     it('gives days:adjustedDays 6:1 if all in 2-3 years ago', () => {
         let trip = new Parser.DefaultTrip(
-            {port: JFK, time: moment('2014-08-01')},
-            {port: JFK, time: moment('2014-08-12')}
+            {port: JFK, time: moment('2014-11-01')},
+            {port: JFK, time: moment('2014-11-12')}
         );
 
-        expect(trip.adjustedDaysAt(moment('2016-09-17'))).to.equal(2);
+        expect(trip.adjustedDaysUpTo(moment('2016-09-17'))).to.equal(2);
+    });
+
+    it('gives only counts days in the current year up to the given date', () => {
+        let trip = new Parser.DefaultTrip(
+            {port: JFK, time: moment('2016-11-10')},
+            {port: JFK, time: moment('2016-11-15')}
+        );
+
+        expect(trip.adjustedDaysUpTo(moment('2016-11-12'))).to.equal(2);
     });
 });
 
@@ -118,11 +127,11 @@ describe('DefaultTravelHistory should', () => {
 
     function aTripWithAdjustedDays(total: number, inLastYear: number): Parser.Trip {
         return {
-            adjustedDaysAt: (date) => {
+            adjustedDaysUpTo: (date) => {
                 expect(date).to.deep.equal(someDate);
                 return total;
             },
-            adjustedDaysInTheLastYearAt: (date) => {
+            adjustedDaysInTheLastYearUpTo: (date) => {
                 expect(date).to.deep.equal(someDate);
                 return inLastYear;
             }
@@ -134,8 +143,8 @@ describe('DefaultTravelHistory should', () => {
             aTripWithAdjustedDays(56, 44)
         ]);
 
-        expect(travelHistory.adjustedDaysAt(someDate)).to.equal(56);
-        expect(travelHistory.adjustedDaysInTheLastYearAt(someDate)).to.equal(44);
+        expect(travelHistory.adjustedDaysUpTo(someDate)).to.equal(56);
+        expect(travelHistory.adjustedDaysInTheLastYearUpTo(someDate)).to.equal(44);
     });
 
     it('with two trips it should sum the total and last year adjusted days', () => {
@@ -144,8 +153,8 @@ describe('DefaultTravelHistory should', () => {
             aTripWithAdjustedDays(10, 20)
         ]);
 
-        expect(travelHistory.adjustedDaysAt(someDate)).to.equal(12);
-        expect(travelHistory.adjustedDaysInTheLastYearAt(someDate)).to.equal(23);
+        expect(travelHistory.adjustedDaysUpTo(someDate)).to.equal(12);
+        expect(travelHistory.adjustedDaysInTheLastYearUpTo(someDate)).to.equal(23);
     });
 });
 

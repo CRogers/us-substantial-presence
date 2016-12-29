@@ -9,13 +9,13 @@ import * as Calculator from '../src/calculator'
 describe('Calculator should', () => {
     let someDate = moment('2016-07-21');
 
-    function travelHistoryWithAdjustedDays(total: number, inLastYear: number): Parser.Trip {
+    function travelHistoryWithAdjustedDays(total: number, inLastYear: number): Parser.TravelHistory {
         return {
-            adjustedDaysAt: (date) => {
+            adjustedDaysUpTo: (date) => {
                 expect(date).to.deep.equal(someDate);
                 return total;
             },
-            adjustedDaysInTheLastYearAt: (date) => {
+            adjustedDaysInTheLastYearUpTo: (date) => {
                 expect(date).to.deep.equal(someDate);
                 return inLastYear;
             }
