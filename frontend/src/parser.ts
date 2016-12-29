@@ -5,7 +5,6 @@ import 'moment-range'
 import { Optional } from './optional'
 
 export interface TravelHistory {
-    trips: Trip[];
     adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
     adjustedDaysAt(date: moment.Moment): AdjustedDays;
 }
@@ -26,12 +25,11 @@ export class DefaultTravelHistory implements TravelHistory {
     }
 }
 
-export type Days = number;
 export type AdjustedDays = number;
 
 export interface Trip {
-    entry: PortVisit;
-    exit: PortVisit;
+    adjustedDaysInTheLastYearAt(date: moment.Moment): AdjustedDays;
+    adjustedDaysAt(date: moment.Moment): AdjustedDays;
 }
 
 export class DefaultTrip implements Trip {
