@@ -10,7 +10,8 @@ module.exports = {
     target: 'web',
     module: {
         loaders: [
-            {test: /\.tsx?/, loader: 'ts-loader'}
+            {test: /\.tsx?/, loader: 'ts-loader'},
+            {test: /\.less$/, loader: "style!css!less"}
         ]
     },
     resolve: {

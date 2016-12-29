@@ -11,6 +11,7 @@ describe('Calculator should', () => {
 
     function travelHistoryWithAdjustedDays(total: number, inLastYear: number): Parser.TravelHistory {
         return {
+            trips: [],
             adjustedDaysUpTo: (date) => {
                 expect(date).to.deep.equal(someDate);
                 return total;

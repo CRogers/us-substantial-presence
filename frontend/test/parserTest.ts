@@ -8,6 +8,8 @@ import * as Parser from '../src/parser'
 
 import TravelHistory = Parser.DefaultTravelHistory;
 import DefaultTrip = Parser.DefaultTrip;
+import {Port} from "../src/parser";
+import {PortVisit} from "../src/parser";
 
 let JFK = 'JFK - JOHN F KENNEDY INTL';
 let NYC = 'NYC - NEW YORK CITY, NY';
@@ -127,6 +129,8 @@ describe('DefaultTravelHistory should', () => {
 
     function aTripWithAdjustedDays(total: number, inLastYear: number): Parser.Trip {
         return {
+            entry: {} as PortVisit,
+            exit: {} as PortVisit,
             adjustedDaysUpTo: (date) => {
                 expect(date).to.deep.equal(someDate);
                 return total;
